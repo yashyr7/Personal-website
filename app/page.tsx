@@ -175,7 +175,7 @@ export default function Home() {
                         ></Image>
                     </a>
                 </div>
-                <div className={`text-s ${inconsolata.className}`}>
+                <div className={`text-s text-[#ddd] ${inconsolata.className}`}>
                     Made with love by Yash Rathore
                 </div>
             </div>
