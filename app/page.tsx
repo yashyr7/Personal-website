@@ -88,10 +88,10 @@ export default function Home() {
                         particleColor="#FFFFFF"
                     />
                 </div>
-                <div className="mt-60">
+                <div className="m-auto">
                     <div className="flex flex-col">
                         <div
-                            className={`md:text-9xl p-4 text-center z-10 sm:text-8xl text-7xl font-bold tracking-tight heading-text m-auto`}
+                            className={`md:text-9xl p-4 text-center z-10 sm:text-8xl text-7xl font-bold tracking-tight heading-text`}
                         >
                             Yash Rathore
                         </div>
