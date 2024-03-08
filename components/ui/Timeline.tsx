@@ -11,7 +11,7 @@ interface TimelineProps {
     callback: () => void | undefined;
 }
 
-const Timeline: React.FC<TimelineProps> = ({ setObserver, callback }) => {
+const Timeline = () => {
     return (
         <div className="wrapper">
             <div id="timeline1" className="timeline" />

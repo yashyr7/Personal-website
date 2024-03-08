@@ -118,7 +118,8 @@ export default function Home() {
                     </motion.h1>
                 </LampContainer>
                 <div>
-                    <TimelineObserver
+                    <Timeline />
+                    {/* <TimelineObserver
                         initialColor="black"
                         fillColor="red"
                         handleObserve={(setObserver) => (
@@ -127,7 +128,7 @@ export default function Home() {
                                 setObserver={setObserver}
                             />
                         )}
-                    />
+                    /> */}
                 </div>
             </div>
             <div id="projects">
