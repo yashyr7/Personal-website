@@ -3,31 +3,100 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 214, 219, 220;
+    --background-end-rgb: 255, 255, 255;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+    :root {
+        --foreground-rgb: 255, 255, 255;
+        --background-start-rgb: 0, 0, 0;
+        --background-end-rgb: 0, 0, 0;
+    }
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    color: rgb(var(--foreground-rgb));
+    background: linear-gradient(
+            to bottom,
+            transparent,
+            rgb(var(--background-end-rgb))
+        )
+        rgb(var(--background-start-rgb));
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+    .text-balance {
+        text-wrap: balance;
+    }
+}
+
+.App {
+    font-family: sans-serif;
+    text-align: center;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.timeline {
+    height: 300px;
+    width: 5px;
+    background-color: #e5e5e5;
+}
+
+.stub1 {
+    line-height: 300px;
+    font-size: 24px;
+    background-color: #eae4e4;
+}
+
+.stub2 {
+    height: 1000px;
+}
+
+.circle {
+    width: 30px;
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border-radius: 50%;
+    background-color: #e5e5e5;
+}
+
+.circleWrapper {
+    position: relative;
+}
+
+.message-left {
+    position: absolute;
+    right: 150%;
+    font-weight: bold;
+}
+
+.message-right {
+    position: absolute;
+    left: 150%;
+    font-weight: bold;
+}
+
+.heading-gradient-bg {
+    background: linear-gradient(#12071f, rgb(2 6 23 / var(--tw-bg-opacity)));
+}
+
+.heading-text {
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    background: linear-gradient(30deg, rgb(243, 144, 236), rgb(252, 214, 143))
+        text;
+}
+
+.footer-gradient-bg {
+    background: linear-gradient(rgb(2 6 23 / var(--tw-bg-opacity)), #12071f);
 }
