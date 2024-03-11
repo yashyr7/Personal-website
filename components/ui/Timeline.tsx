@@ -6,11 +6,6 @@ import { Inconsolata } from "next/font/google";
 
 const inconsolata = Inconsolata({ subsets: ["latin"] });
 
-interface TimelineProps {
-    setObserver: (element: Element, callback?: () => void) => void;
-    callback: () => void | undefined;
-}
-
 const Timeline = () => {
     return (
         <div className="wrapper">

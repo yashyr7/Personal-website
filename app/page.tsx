@@ -119,16 +119,6 @@ export default function Home() {
                 </LampContainer>
                 <div>
                     <Timeline />
-                    {/* <TimelineObserver
-                        initialColor="black"
-                        fillColor="red"
-                        handleObserve={(setObserver) => (
-                            <Timeline
-                                callback={onCallback}
-                                setObserver={setObserver}
-                            />
-                        )}
-                    /> */}
                 </div>
             </div>
             <div id="projects">
@@ -175,7 +165,9 @@ export default function Home() {
                         ></Image>
                     </a>
                 </div>
-                <div className={`text-s text-[#ddd] ${inconsolata.className}`}>
+                <div
+                    className={`text-s text-[#ddd] text-center ${inconsolata.className}`}
+                >
                     Made with love by Yash Rathore
                 </div>
             </div>
