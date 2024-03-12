@@ -53,7 +53,7 @@ export default function Home() {
         {
             title: "Jammming",
             description:
-                "Jamming allows users to search the Spotify library, create a custom playlist, then save it to their Spotify account. Created using React, boostrap and Spotify API.",
+                "Jammming allows users to search the Spotify library, create a custom playlist, then save it to their Spotify account. Created using React, boostrap and Spotify API.",
             link: "https://jammmingplaylistmaker.surge.sh/",
         },
         {
@@ -168,7 +168,7 @@ export default function Home() {
                 <div
                     className={`text-s text-[#ddd] text-center ${inconsolata.className}`}
                 >
-                    Made with love by Yash Rathore
+                    Made by Yash Rathore
                 </div>
             </div>
         </div>
