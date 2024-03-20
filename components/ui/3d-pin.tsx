@@ -2,6 +2,9 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/utils/cn";
+import { Inconsolata } from "next/font/google";
+
+const inconsolata = Inconsolata({ subsets: ["latin"] });
 
 export const PinContainer = ({
     children,
@@ -67,15 +70,17 @@ export const PinPerspective = ({
     href?: string;
 }) => {
     return (
-        <motion.div className="pointer-events-none w-36 md:w-80 h-72 flex items-center justify-center opacity-0 group-hover/pin:opacity-100 z-[60] transition duration-500">
+        <motion.div className="w-36 md:w-80 h-72 flex items-center justify-center opacity-0 group-hover/pin:opacity-100 z-[60] transition duration-500">
             <div className=" w-full h-full -mt-7 flex-none  inset-0">
                 <div className="absolute top-0 inset-x-0 flex justify-center">
                     <a
                         href={href}
                         target={"_blank"}
-                        className="relative flex space-x-2 items-center z-10 rounded-full bg-zinc-950 py-0.5 px-4 ring-1 ring-white/10 "
+                        className="relative flex space-x-2 items-center justify-center z-10 rounded-full bg-zinc-950 py-0.5 px-3 ring-1 ring-white/10 "
                     >
-                        <span className="relative z-20 text-[#ddd] text-xs font-bold inline-block px-0.5 py-1">
+                        <span
+                            className={`relative z-20 text-[#ddd] text-xs text-center ${inconsolata.className} font-bold inline-block px-0.5 py-1`}
+                        >
                             {title}
                         </span>
 

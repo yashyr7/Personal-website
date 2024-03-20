@@ -14,13 +14,14 @@ const Timeline = () => {
                 <div
                     className={`message-left inline-block whitespace-nowrap text-[#ddd] ${inconsolata.className}`}
                 >
-                    May - Aug 2021
+                    Jan - Apr 2024
                 </div>
                 <div id="circle1" className="circle"></div>
                 <ExperienceCard
-                    company="Bentley Systems"
-                    role="Software Developer"
-                    url="https://www.bentley.com/"
+                    company="Pinewheel.ai"
+                    role="Front-end Engineer"
+                    title="Chatbot interface development using React and Tailwind"
+                    url="https://pinewheel.ai/"
                     className="message-right"
                 />
             </div>
@@ -29,13 +30,14 @@ const Timeline = () => {
                 <div
                     className={`message-right inline-block whitespace-nowrap text-[#ddd] ${inconsolata.className}`}
                 >
-                    Jan - Apr 2022
+                    May - Aug 2023
                 </div>
                 <div id="circle2" className="circle"></div>
                 <ExperienceCard
-                    company="HomeX"
+                    company="DNAstack"
                     role="Software Developer"
-                    url="https://www.homex.com/"
+                    title="DNAstack client library development using Python. Workbench azure marketplace app development using ASP.NET and C#"
+                    url="https://www.dnastack.com/"
                     className="message-left"
                 />
             </div>
@@ -50,6 +52,7 @@ const Timeline = () => {
                 <ExperienceCard
                     company="Enlighted"
                     role="Front-end Developer"
+                    title="Internal tools development used by 5+ teams"
                     url="https://www.enlightedinc.com/"
                     className="message-right"
                 />
@@ -59,28 +62,30 @@ const Timeline = () => {
                 <div
                     className={`message-right inline-block whitespace-nowrap text-[#ddd] ${inconsolata.className}`}
                 >
-                    May - Aug 2023
+                    Jan - Apr 2022
                 </div>
                 <div id="circle4" className="circle"></div>
                 <ExperienceCard
-                    company="DNAstack"
+                    company="HomeX"
                     role="Software Developer"
-                    url="https://www.dnastack.com/"
+                    title="Mobile and web development using Flutter and Dart"
+                    url="https://www.homex.com/"
                     className="message-left"
                 />
             </div>
-            <div id="timeline4" className="timeline" />
+            <div id="timeline5" className="timeline" />
             <div className="circleWrapper">
                 <div
                     className={`message-left inline-block whitespace-nowrap text-[#ddd] ${inconsolata.className}`}
                 >
-                    Jan - Apr 2024
+                    May - Aug 2021
                 </div>
-                <div id="circle4" className="circle"></div>
+                <div id="circle5" className="circle"></div>
                 <ExperienceCard
-                    company="Pinewheel.ai"
-                    role="Front-end Engineer"
-                    url="https://pinewheel.ai/"
+                    company="Bentley Systems"
+                    role="Software Developer"
+                    title="Digital Twin visualization software development using React and Selenium"
+                    url="https://www.bentley.com/software/plantsight/"
                     className="message-right"
                 />
             </div>
