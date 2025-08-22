@@ -18,7 +18,7 @@ const Timeline = () => {
         </div>
         <div id="circle" className="circle"></div>
         <ExperienceCard
-          company="aSocial.inc"
+          company="aSocial Inc."
           role="Founding Engineer"
           title="Helping over 7000 users stay focused with Lock In Focus, a productivity app that blocks distracting apps."
           url="https://apps.apple.com/ca/app/lock-in-focus-app-blocker/id6472232979"
