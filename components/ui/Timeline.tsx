@@ -14,7 +14,7 @@ const Timeline = () => {
         <div
           className={`message-right inline-block whitespace-nowrap text-[#ddd] ${inconsolata.className}`}
         >
-          Jan - Apr 2024
+          Apr 2024 - Present
         </div>
         <div id="circle" className="circle"></div>
         <ExperienceCard
