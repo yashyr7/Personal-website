@@ -10,6 +10,8 @@ import { motion } from "framer-motion";
 import { HoverEffect } from "@/components/ui/card-hover-effect";
 import { Inconsolata } from "next/font/google";
 import Topbar from "@/components/ui/navbar";
+import { HoverBorderButton } from "@/components/ui/HoverborderButton";
+import { ChatInterface } from "@/components/ui/chat-interface";
 
 const inconsolata = Inconsolata({ subsets: ["latin"] });
 
@@ -99,6 +101,15 @@ export default function Home() {
               className={`w-full z-10 ${inconsolata.className}`}
               words={words}
             />
+            <HoverBorderButton
+              className={`mx-auto ${inconsolata.className}`}
+              onClick={() => {
+                const el = document.getElementById("chat");
+                if (el) {
+                  el.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+              }}
+            />
           </div>
         </div>
       </div>
@@ -140,6 +151,27 @@ export default function Home() {
           <HoverEffect items={projects} />
         </div>
       </div>
+
+      <div id="chat" className="pb-20">
+        <LampContainer>
+          <motion.h1
+            initial={{ opacity: 0.5, y: 100 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{
+              delay: 0.3,
+              duration: 0.8,
+              ease: "easeInOut",
+            }}
+            className="mt-0 py-4 bg-gradient-to-br from-slate-300 to-slate-500 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl"
+          >
+            Chat With Me
+          </motion.h1>
+        </LampContainer>
+        <div className="max-w-5xl mx-auto px-8">
+          <ChatInterface fontClassName={inconsolata.className} />
+        </div>
+      </div>
+
       <div
         id="contact"
         className="flex p-20 flex-col items-center justify-center footer-gradient-bg"
