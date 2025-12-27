@@ -13,6 +13,7 @@ type ChatMessage = {
   role: ChatRole;
   content: string;
   createdAt: number;
+  isError?: boolean;
 };
 
 type ConnectionStatus = "connecting" | "connected" | "disconnected";
@@ -46,17 +47,36 @@ function coerceIncomingMessage(data: unknown): string {
   return "";
 }
 
-function extractAssistantText(raw: string): string {
+function extractAssistantText(raw: string): { text: string; isError: boolean } {
   const trimmed = raw.trim();
-  if (!trimmed) return "";
+  if (!trimmed) return { text: "", isError: false };
 
   // Try JSON payloads commonly used by FastAPI chat websockets.
   try {
     const parsed = JSON.parse(trimmed);
-    if (typeof parsed === "string") return parsed;
+    if (typeof parsed === "string") return { text: parsed, isError: false };
 
     if (parsed && typeof parsed === "object") {
       const obj = parsed as Record<string, unknown>;
+
+      // Check for error responses
+      if (obj.type === "error") {
+        const code = obj.code as string;
+        const message = obj.message as string;
+        const details = obj.details as string;
+
+        if (code === "QUOTA_EXCEEDED") {
+          return {
+            text: `❌ **API Quota Exceeded**\n\n${message}\n\nDetails: ${details}`,
+            isError: true,
+          };
+        } else if (code === "API_ERROR") {
+          return {
+            text: `❌ **API Error**\n\n${message}\n\nDetails: ${details}`,
+            isError: true,
+          };
+        }
+      }
 
       const candidates = [
         obj.reply,
@@ -68,18 +88,20 @@ function extractAssistantText(raw: string): string {
       ];
 
       for (const value of candidates) {
-        if (typeof value === "string" && value.trim()) return value;
+        if (typeof value === "string" && value.trim())
+          return { text: value, isError: false };
       }
 
       // If backend sends something like { type: "chunk", delta: "..." }
       const delta = obj.delta;
-      if (typeof delta === "string" && delta.trim()) return delta;
+      if (typeof delta === "string" && delta.trim())
+        return { text: delta, isError: false };
     }
   } catch {
     // fall back to raw text
   }
 
-  return trimmed;
+  return { text: trimmed, isError: false };
 }
 
 export function ChatInterface({
@@ -155,14 +177,29 @@ export function ChatInterface({
 
       ws.onmessage = (evt) => {
         const raw = coerceIncomingMessage(evt.data);
-        const text = extractAssistantText(raw);
+        const { text, isError } = extractAssistantText(raw);
         if (!text) return;
 
         // If backend streams chunks, we try to append into the last assistant message.
         setMessages((prev) => {
           const last = prev[prev.length - 1];
 
-          if (last && last.role === "assistant") {
+          // For errors, always create a new message (don't append)
+          if (isError) {
+            const newId = nowId();
+            return [
+              ...prev,
+              {
+                id: newId,
+                role: "system",
+                content: text,
+                createdAt: Date.now(),
+                isError: true,
+              },
+            ];
+          }
+
+          if (last && last.role === "assistant" && !last.isError) {
             const next = prev.slice();
             next[prev.length - 1] = {
               ...last,
@@ -313,6 +350,7 @@ export function ChatInterface({
             {messages.map((m) => {
               const isUser = m.role === "user";
               const isSystem = m.role === "system";
+              const isError = m.isError;
 
               return (
                 <div
@@ -325,7 +363,9 @@ export function ChatInterface({
                   <div
                     className={cn(
                       "max-w-[85%] rounded-2xl px-4 py-3 border",
-                      isSystem
+                      isError
+                        ? "bg-red-950/30 border-red-500/30"
+                        : isSystem
                         ? "bg-black/20 border-white/[0.08]"
                         : isUser
                         ? "bg-black border-white/[0.16]"
