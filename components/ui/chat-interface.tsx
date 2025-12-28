@@ -23,7 +23,6 @@ function nowId() {
 }
 
 function buildWsUrl() {
-  // Prefer explicit configuration when the backend is on a different host/port.
   const envUrl = process.env.NEXT_PUBLIC_CHAT_WS_URL;
   if (envUrl && envUrl.trim()) return envUrl.trim();
 
@@ -35,7 +34,6 @@ function buildWsUrl() {
 function coerceIncomingMessage(data: unknown): string {
   if (typeof data === "string") return data;
 
-  // Some servers send binary frames.
   if (data instanceof ArrayBuffer) {
     try {
       return new TextDecoder().decode(new Uint8Array(data));
@@ -51,7 +49,6 @@ function extractAssistantText(raw: string): { text: string; isError: boolean } {
   const trimmed = raw.trim();
   if (!trimmed) return { text: "", isError: false };
 
-  // Try JSON payloads commonly used by FastAPI chat websockets.
   try {
     const parsed = JSON.parse(trimmed);
     if (typeof parsed === "string") return { text: parsed, isError: false };
@@ -59,7 +56,6 @@ function extractAssistantText(raw: string): { text: string; isError: boolean } {
     if (parsed && typeof parsed === "object") {
       const obj = parsed as Record<string, unknown>;
 
-      // Check for error responses
       if (obj.type === "error") {
         const code = obj.code as string;
         const message = obj.message as string;
@@ -92,14 +88,11 @@ function extractAssistantText(raw: string): { text: string; isError: boolean } {
           return { text: value, isError: false };
       }
 
-      // If backend sends something like { type: "chunk", delta: "..." }
       const delta = obj.delta;
       if (typeof delta === "string" && delta.trim())
         return { text: delta, isError: false };
     }
-  } catch {
-    // fall back to raw text
-  }
+  } catch {}
 
   return { text: trimmed, isError: false };
 }
@@ -180,11 +173,9 @@ export function ChatInterface({
         const { text, isError } = extractAssistantText(raw);
         if (!text) return;
 
-        // If backend streams chunks, we try to append into the last assistant message.
         setMessages((prev) => {
           const last = prev[prev.length - 1];
 
-          // For errors, always create a new message (don't append)
           if (isError) {
             const newId = nowId();
             return [
@@ -222,12 +213,9 @@ export function ChatInterface({
       };
 
       ws.onerror = () => {
-        // Let onclose handle reconnect.
         try {
           ws.close();
-        } catch {
-          // ignore
-        }
+        } catch {}
       };
 
       ws.onclose = () => {
@@ -248,12 +236,9 @@ export function ChatInterface({
       if (wsRef.current) {
         try {
           wsRef.current.close();
-        } catch {
-          // ignore
-        }
+        } catch {}
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [wsUrl]);
 
   useEffect(() => {
@@ -275,7 +260,6 @@ export function ChatInterface({
 
     const ws = wsRef.current;
     if (!ws || ws.readyState !== WebSocket.OPEN) {
-      // Attempt reconnect and show a lightweight system note.
       setMessages((prev) => [
         ...prev,
         {
@@ -289,8 +273,6 @@ export function ChatInterface({
       return;
     }
 
-    // Default payload: JSON with a `message` field (common FastAPI patterns).
-    // If your backend expects plain text frames, change this to `ws.send(text)`.
     ws.send(JSON.stringify({ message: text }));
   };
 
